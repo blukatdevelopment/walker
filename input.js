@@ -23,7 +23,7 @@ input.input = {
 
 input.onMouseMove = function(evt)
 {
-  var rect = getCanvas().getBoundingClientRect();
+  var rect = gfx.getCanvas().getBoundingClientRect();
   input.mousePos = {
     x: evt.clientX - rect.left,
     y: evt.clientY - rect.top
@@ -46,8 +46,8 @@ input.init = function(){
     input.input.keys[key] = false;
   }
   var canvas = document.getElementById("mainCanvas");
-  canvas.addEventListener("mousedown", scene.onMouseDown);
-  canvas.addEventListener("mouseup", scene.onMouseUp);
+  canvas.addEventListener("mousedown", scene.mouseDown);
+  canvas.addEventListener("mouseup", scene.mouseUp);
   canvas.addEventListener("mousemove", input.onMouseMove);
   window.addEventListener('keydown', input.onKeyDown, false);
   window.addEventListener('keyup', input.onKeyUp, false);
