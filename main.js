@@ -4,9 +4,9 @@
 var main = {};
 
 //Frames Per Second. Change this for faster or slower max framerate.
-main.fps = 60; 
+main.fps = 24; 
 main.startTime = Date.now();
-main.frameDuration = 1000 / main.fps
+main.frameDuration = 1000 / main.fps;
 main.lag = 0;
 
 main.gameLoop = function(){
@@ -16,7 +16,7 @@ main.gameLoop = function(){
   var elapsed = current_time - main.startTime;
   main.startTime = current_time;
   main.lag = elapsed;
-  while(main.lag >= main.frameDuration){
+  while(main.lag > 0){
     scene.update();
     main.lag -= main.frameDuration;
   }

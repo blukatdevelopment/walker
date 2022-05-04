@@ -11,7 +11,7 @@ var KEYS = {
 ##############################################################################*/
 var input = {};
 
-input.mousePos = null;
+input.mousePos = { x: 0, y: 0};
 input.getMousePosition = function(){
   return input.mousePos;
 }

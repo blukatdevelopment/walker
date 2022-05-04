@@ -7,6 +7,11 @@ var titleScene = {};
 titleScene.update = function(){
     gfx.clear();
     this.drawEndButton();
+    this.drawTitle();
+}
+
+titleScene.drawTitle = function(){
+    gfx.drawImage("images/title.png", 100, 100);
 }
 
 titleScene.drawEndButton = function(){

@@ -61,3 +61,9 @@ gfx.drawText = function(text, x, y){
   context.font = "30px Arial";
   context.fillText(text, x, y);
 }
+
+gfx.drawImage = function(imagePath, x, y){
+  var img = document.createElement("img");
+  img.src = imagePath;
+  gfx.getContext().drawImage(img, x, y);
+}
