@@ -10,8 +10,8 @@ var ui = {};
 # .click() advances one slide. Reaching the end of the slide calls onEnd
 ##############################################################################*/
 
-ui.newLinearDialogue = function(slides, onEnd = null){
-	var d = {
+ui.newLinearDialogue = function(slides){
+	let d = {
 		activeSlide: 0,
 		slides: slides,
 		x: 0,
@@ -20,18 +20,9 @@ ui.newLinearDialogue = function(slides, onEnd = null){
 		width: 800,
 		fontSize: 20,
 		onEnd: onEnd,
-		_active: true
-	};
-	d.show = function(){
-		d._active = true;
-	};
-	d.hide = function(){
-		d._active = false;
+		finished: false
 	};
 	d.update = function(){
-		if(!d._active){
-			return;
-		}
 		gfx.drawBox(d.x, d.y, d.width, d.height);
 		let text = d.slides[d.activeSlide];
 		let rows = text.match(/.{1,65}/g);
@@ -42,20 +33,70 @@ ui.newLinearDialogue = function(slides, onEnd = null){
 		}
 	};
 	d.advance = function(){
-		if(!d._active){
-			return;
-		}
 		if(d.activeSlide < d.slides.length-1){
 			d.activeSlide++;
 		}
 
-		if(d.activeSlide == d.slides.length-1 && d.onEnd != null){
-			d.onEnd();
+		if(d.activeSlide == d.slides.length-1){
+			d.finished = true;
 		}
 	};
 	return d;
 }
 
 /*##############################################################################
-# DialogueTree
+# DialogueSelect
+# Displays up to 4 options, 63 characters each
 ##############################################################################*/
+
+ui.newDialogueSelect = function(options){
+	let d = {
+		finished: false,
+		selected: 0,
+		options: options,
+		x: 0,
+		y: 500,
+		height: 100,
+		width: 800,
+		fontSize: 20
+	};
+
+	d.update = function(){
+		if(d.finished){
+			return;
+		}
+		gfx.drawBox(d.x, d.y, d.width, d.height);
+		for(let i = 0; i < options.length && i < 4; i++){
+			let offset = i + 1;
+			let padding = 5;
+			let selected = i == d.selected;
+			let text = selected ? "> " + d.options[i] : "  " + d.options[i];
+			gfx.drawText(text, d.x+padding, d.y + (d.fontSize * offset), "20px monospace");
+		}
+	};
+
+	d.selectPrevious = function(){
+		if(d.finished){
+			return;
+		}
+		d.selected--;
+		if(d.selected < 0){
+			d.selected = d.options.length-1;
+		}
+	}
+
+	d.selectNext = function(){
+		if(d.finished){
+			return;
+		}
+		d.selected++;
+		if(d.selected > d.options.length-1){
+			d.selected = 0;
+		}
+	}
+
+	d.select = function(){
+		d.finished = true;
+	}
+	return d;
+}
