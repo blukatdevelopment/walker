@@ -32,11 +32,13 @@ input.onMouseMove = function(evt)
 input.onKeyDown = function(evt){
   if(evt.which in input.input.keys){
     input.input.keys[evt.which] = true;
+    scene.keyDown(evt);
   }
 }
 input.onKeyUp = function(evt){
   if(evt.which in input.input.keys){
-    input.keys[evt.which] = false;
+    input.input.keys[evt.which] = false;
+    scene.keyUp(evt);
   }
 }
 

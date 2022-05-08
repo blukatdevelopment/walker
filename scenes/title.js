@@ -1,45 +1,34 @@
 /*##############################################################################
-# titleScene Screen
+# Title Screen
 ##############################################################################*/
-
 var titleScene = {};
+
+titleScene.dialogue = ui.newLinearDialogue(dLinearDialogue.slides, ()=>{
+
+});
 
 titleScene.update = function(){
     gfx.clear();
-    this.drawEndButton();
-    this.drawTitle();
+    titleScene.dialogue.update();
 }
 
 titleScene.drawTitle = function(){
-    gfx.drawImage("images/title.png", 100, 100);
+
 }
 
 titleScene.drawEndButton = function(){
-    gfx.drawBox(100, 100, 100, 100);
-    gfx.drawText(`Kills: 10`, 100, 240);
-    if(this.isEndButtonSelected()){
-        gfx.drawLine(0, 0, 100, 100);
-        gfx.drawLine(0, 400, 100, 200);
-        gfx.drawLine(400, 0, 200, 100);
-        gfx.drawLine(400, 400, 200, 200);
-    }
-}
 
-titleScene.isEndButtonSelected = function (){
-    var boxTopLeft = { x: 100, y: 100 };
-    var boxBottomRight = { x: 200, y: 200};
-    var point = input.getMousePosition();
-    if(typeof point === "undefined" || point == null){
-        return false;
-    }
-    return util.isInsideBox(boxTopLeft, boxBottomRight, point);
 }
 
 titleScene.mouseDown = function(){
-    if(this.isEndButtonSelected()){
-        console.log("Cool");
-    }
-    else{
-        console.log("Not cool");
+
+}
+
+titleScene.keyDown = function(evt){
+}
+
+titleScene.keyUp = function(evt){
+    if(evt.which === KEYS.K_SPACE){
+        titleScene.dialogue.advance();
     }
 }

@@ -11,6 +11,7 @@ These are scripts with common functionality that can be shared between multiple 
 - `data.js` is a common data store to prevent tight-coupling between scenes.
 - `main.js` has main gameloop. Configure framerate here.
 - `input.js` sets up input handlers and keybindings.
+- `ui.js` ui components go here.
 - `util.js` utlity functions that don't belong anywhere else.
 - `scene.js` configure your scenes and starting scene here.
 - `sfx.js` configure your audio constants here.
@@ -30,9 +31,9 @@ example.mouseDown = function(){}
 // Called every time a click on the canvas is released
 example.mouseUp = function(){}
 // Called every time a configured key/button is pressed
-example.keyDown = function(){}
+example.keyDown = function(evt){}
 // Called every time a configured key/button is released
-example.keyUp = function(){}
+example.keyUp = function(evt){}
 ```
 
 ### Assets

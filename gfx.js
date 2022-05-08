@@ -56,9 +56,9 @@ gfx.drawBox = function(x, y, width, height){
   gfx.drawLine(x+width, y, x+width, y+height);
 }
 
-gfx.drawText = function(text, x, y){
+gfx.drawText = function(text, x, y, font = "20px monospace"){
   let context = gfx.getContext()
-  context.font = "30px Arial";
+  context.font = font;
   context.fillText(text, x, y);
 }
 

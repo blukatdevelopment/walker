@@ -17,6 +17,7 @@ main.gameLoop = function(){
   main.startTime = current_time;
   main.lag = elapsed;
   while(main.lag > 0){
+    // Comment this line out to quiet most errors.
     scene.update();
     main.lag -= main.frameDuration;
   }
