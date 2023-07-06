@@ -6,25 +6,36 @@
 var ui = {};
 
 /*##############################################################################
-# LinearDialogue. Displays up to 260 characters per slide.
-# .click() advances one slide. Reaching the end of the slide calls onEnd
+# Slide
+# This is the data for a single 260 character message displayed on the screen.
+##############################################################################*/
+ui.Slide = function(text = ""){
+	let slide = {};
+	slide.text = text;
+	slide.class = "slide";
+	return slide;
+}
+
+/*##############################################################################
+# SlideShow. Displays a sequence of sllides.
+# .advance() advances one slide.
 ##############################################################################*/
 
-ui.newLinearDialogue = function(slides){
+ui.SlideShow = function(slides, nextId=-1){
 	let d = {
 		activeSlide: 0,
 		slides: slides,
+		class: "slideshow",
 		x: 0,
 		y: 500,
 		height: 100,
 		width: 800,
 		fontSize: 20,
-		onEnd: onEnd,
 		finished: false
 	};
 	d.update = function(){
 		gfx.drawBox(d.x, d.y, d.width, d.height);
-		let text = d.slides[d.activeSlide];
+		let text = d.slides[d.activeSlide].text;
 		let rows = text.match(/.{1,65}/g);
 		for(let i = 0; i < rows.length; i++){
 			let offset = i + 1;
@@ -32,7 +43,7 @@ ui.newLinearDialogue = function(slides){
 			gfx.drawText(rows[i], d.x+padding, d.y + (d.fontSize * offset), "20px monospace");
 		}
 	};
-	d.advance = function(){
+	d.select = function(){
 		if(d.activeSlide < d.slides.length-1){
 			d.activeSlide++;
 		}
@@ -41,19 +52,41 @@ ui.newLinearDialogue = function(slides){
 			d.finished = true;
 		}
 	};
+	d.selectNext = function(){}
+	d.selectPrevious = function(){}
 	return d;
 }
 
 /*##############################################################################
-# DialogueSelect
-# Displays up to 4 options, 63 characters each
+# Answer
+# Data to display an answer and what to do when it's selected.
+##############################################################################*/
+ui.Answer = function(text, ){
+
+}
+
+/*##############################################################################
+# Question
+# Data to ask a question and display answers.
+# Contains a slide and answers
+##############################################################################*/
+ui.Question = function(slide, answers){
+	let d = {};
+	d.prompt = slide;
+	d.answers = answers;
+	return d;
+}
+
+/*##############################################################################
+# Select
+# Displays up to 4 answers, 63 characters each
 ##############################################################################*/
 
-ui.newDialogueSelect = function(options){
+ui.Select = function(answers){
 	let d = {
 		finished: false,
 		selected: 0,
-		options: options,
+		answers: answers,
 		x: 0,
 		y: 500,
 		height: 100,
@@ -66,11 +99,11 @@ ui.newDialogueSelect = function(options){
 			return;
 		}
 		gfx.drawBox(d.x, d.y, d.width, d.height);
-		for(let i = 0; i < options.length && i < 4; i++){
+		for(let i = 0; i < answers.length && i < 4; i++){
 			let offset = i + 1;
 			let padding = 5;
 			let selected = i == d.selected;
-			let text = selected ? "> " + d.options[i] : "  " + d.options[i];
+			let text = selected ? "> " + d.answers[i] : "  " + d.answers[i];
 			gfx.drawText(text, d.x+padding, d.y + (d.fontSize * offset), "20px monospace");
 		}
 	};
@@ -81,7 +114,7 @@ ui.newDialogueSelect = function(options){
 		}
 		d.selected--;
 		if(d.selected < 0){
-			d.selected = d.options.length-1;
+			d.selected = d.answers.length-1;
 		}
 	}
 
@@ -90,13 +123,37 @@ ui.newDialogueSelect = function(options){
 			return;
 		}
 		d.selected++;
-		if(d.selected > d.options.length-1){
+		if(d.selected > d.answers.length-1){
 			d.selected = 0;
 		}
 	}
 
 	d.select = function(){
 		d.finished = true;
+	}
+	return d;
+}
+
+/*##############################################################################
+# DialogueManager
+# Traverses nodes
+##############################################################################*/
+
+ui.newDialogueManager = function(nodes){
+	let d = {};
+	d.nodes = nodes;
+	d.activeNode = d.nodes[0];
+	d.update = function(){
+
+	}
+	d.select = function(){
+		
+	}
+	d.selectNext = function(){
+
+	}
+	d.selectPrevious = function(){
+
 	}
 	return d;
 }

@@ -1,4 +1,4 @@
-/*##############################################################################
+/*#########losing control of #####################################################################
 # Scene management
 ##############################################################################*/
 var scene = {};
@@ -20,25 +20,7 @@ scene.getScene = function(){
 
 scene.update = function(){
   let active = scene.getScene();
-  active.update();
-}
-
-scene.mouseDown = function(evt){
-  let active = scene.getScene()
-  active.mouseDown(evt);
-}
-
-scene.mouseUp = function(evt){
-  let active = scene.getScene();
-  active.mouseDown(evt);
-}
-
-scene.keyDown = function(evt){
-	let active = scene.getScene();
-	active.keyDown(evt);
-}
-
-scene.keyUp = function(evt){
-	active = scene.getScene();
-	active.keyUp(evt);
+  let key_events = input.popKeyEvents();
+  // Comment this line out to check for other errors
+  active.update(key_events);
 }

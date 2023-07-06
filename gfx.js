@@ -15,6 +15,14 @@ gfx.initContext = function(){
   gfx.Y_MAX = gfx.canvas.height;
 }
 
+gfx.setStrokeColor = function(color){
+  gfx.context.strokeStyle = color;
+}
+
+gfx.setFillColor = function(color){
+  gfx.context.fillStyle = color;
+}
+
 gfx.getCanvas = function(){
   return gfx.canvas;
 }
@@ -23,11 +31,16 @@ gfx.getContext = function(){
   return gfx.context;
 }
 
-gfx.drawCircle = function(x, y, radius){
+gfx.drawCircle = function(x, y, radius, fill=true){
   let context = gfx.getContext();
   context.beginPath();
   context.arc(x, y, radius, 0, 2 * Math.PI);
-  context.fill();
+  if(fill){
+    context.fill();
+  }
+  else{
+    context.stroke();
+  }
 }
 
 gfx.drawLine = function(x1, y1, x2, y2){
@@ -45,15 +58,15 @@ gfx.clear = function(){
 }
 
 // XY is for top left corner.
-gfx.drawBox = function(x, y, width, height){
-  // Top
-  gfx.drawLine(x, y, x+width, y);
-  // Left
-  gfx.drawLine(x, y, x, y+height); 
-  // Bottom
-  gfx.drawLine(x, y+height, x+width, y+height);
-  // Right
-  gfx.drawLine(x+width, y, x+width, y+height);
+gfx.drawBox = function(x, y, width, height, fill){
+  let context = gfx.getContext();
+  gfx.getContext().rect(x, y, width, height);
+  if(fill){
+    context.fill();
+  }
+  else{
+    context.stroke();
+  }
 }
 
 gfx.drawText = function(text, x, y, font = "20px monospace"){

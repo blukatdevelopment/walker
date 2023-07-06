@@ -1,38 +1,30 @@
 /*##############################################################################
 # Title Screen
 ##############################################################################*/
-var titleScene = {};
+function lerp(x, y, a){
+    return x * (1 - a) + y * a;
+}
 
-titleScene.dialogue = ui.newDialogueSelect(["Cool", "Lame", "Rad"]);
+var titleScene = {
+    needInit: true
+};
 
-titleScene.update = function(){
+titleScene.init = function(){
+    let ts = this;
+    ts.needInit = false;
+
+    ts.player = walker.newPlayer();
+}
+
+titleScene.update = function(key_events){
+    let ts = this;
+    if(ts.needInit){
+        ts.init();
+    }
     gfx.clear();
-    titleScene.dialogue.update();
+    ts.player.update(key_events);
+    ts.player.draw();
 }
 
-titleScene.drawTitle = function(){
 
-}
-
-titleScene.drawEndButton = function(){
-
-}
-
-titleScene.mouseDown = function(){
-
-}
-
-titleScene.keyDown = function(evt){
-}
-
-titleScene.keyUp = function(evt){
-    if(evt.which === KEYS.K_SPACE){
-        titleScene.dialogue.select();
-    }
-    if(evt.which === KEYS.K_D || evt.which === KEYS.K_S){
-        titleScene.dialogue.selectNext();
-    }
-    if(evt.which === KEYS.K_A || evt.which === KEYS.K_W){
-        titleScene.dialogue.selectPrevious();
-    }
-}
+console.log(titleScene);

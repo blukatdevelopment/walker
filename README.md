@@ -19,7 +19,7 @@ These are scripts with common functionality that can be shared between multiple 
 ### `scenes/`
 This folder contains "scenes", which are self-contained scripts that are responsible for a particular screen/menu, game mode, or other chunk of functionality. One scene can be active at a time.
 
-Javascript lacks builtin interfaces, but here's an example object containing all the functions expected of a new scene. Feel free to copy-paste this as a starting point.
+Javascript lacks built-in interfaces, but here's an example object containing all the functions expected of a new scene. Feel free to copy-paste this as a starting point.
 ```js
 // Create the scene object.
 var example = {};
